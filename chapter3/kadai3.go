@@ -1,5 +1,10 @@
 package chapter3
 
+import (
+	"fmt"
+	"reflect"
+)
+
 type Dog struct{}
 
 func (d Dog) Bark() string {
@@ -18,5 +23,12 @@ func (c Cat) Crow() string {
 // Catの場合はCrowを実行した結果
 // その他の場合はerrorを返却してください。
 func Kadai3(x interface{}) (string, error) {
-	return "", nil
+	switch x.(type) {
+	case Dog:
+		return x.(Dog).Bark(), nil
+	case Cat:
+		return x.(Cat).Crow(), nil
+	default:
+		return "", fmt.Errorf("invalid type : %v", reflect.TypeOf(x))
+	}
 }
